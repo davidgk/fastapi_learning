@@ -1,14 +1,17 @@
+import os
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
-from main import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.commons.configuration.database import Base
-from src.commons.dependencies.dependencies import get_db
+from dotenv import load_dotenv
+load_dotenv()
 
+from src.commons.dependencies.dependencies import get_db
+from src.commons.configuration.database import Base
+from main import app
 def create_db_local():
     global engine, TestingSessionLocal
-    SQLALCHEMY_DATABASE_URL = "sqlite:///../../fastapi01_test.db"
+    SQLALCHEMY_DATABASE_URL = os.getenv("DB_URL_TEST")
     engine = create_engine(
         SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
     )

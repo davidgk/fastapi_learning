@@ -1,8 +1,7 @@
 import pytest
-from fastapi import HTTPException
-
-from src.posts.controllers import post_controller as controller
 from tests.commons_test import db_test_session
+from fastapi import HTTPException
+from src.posts.controllers import post_controller as controller
 from tests.posts.factory.post_factory import create_post
 from src.posts.models.post_db import Post as PostModel
 import pytest_asyncio
