@@ -8,6 +8,7 @@ fastapi = "*"
 uvicorn = "*"
 httpx = "*"
 pytest = "*"
+anyio = "*"
 
 [dev-packages]
 
