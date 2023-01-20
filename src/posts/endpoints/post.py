@@ -1,8 +1,9 @@
 from fastapi import APIRouter, HTTPException
 
-from src.services.post_service import posts, evaluate_post, find_and_update
-from src.models.post import Post
 from uuid import uuid4 as uuid
+
+from src.posts.models.post import Post
+from src.posts.services.post_service import posts, evaluate_post, find_and_update
 
 router = APIRouter(
     prefix="/posts",
