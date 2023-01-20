@@ -24,3 +24,10 @@ def create_post(db: Session, post: dict):
     db.refresh(db_post)
     return db_post
 
+def update(db, post_db, post_data):
+    for key, value in post_data.items():
+        setattr(post_db, key, value)
+    db.add(post_db)
+    db.commit()
+    db.refresh(post_db)
+    return post_db

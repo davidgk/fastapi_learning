@@ -16,10 +16,10 @@ async def get_posts(db: Session = Depends(get_db)):
     return service.get_posts(db)
 
 @router.get("/{post_id}")
-async def get_post_by_id(post_id: str, title=None):
-    posts_filtered = list(filter(lambda post: evaluate_post(post, post_id, title), posts) or [])
-    if len(posts_filtered) > 0:
-        return posts_filtered[0]
+async def get_post_by_id(post_id: str, db: Session = Depends(get_db)):
+    posts_filtered = service.find_post_by_id(post_id, db )
+    if posts_filtered:
+        return posts_filtered
     else:
         raise HTTPException(status_code=404)
 
@@ -41,8 +41,8 @@ async def remove_posts(post_id: str):
 
 
 @router.put("/{post_id}")
-async def update_posts(post_id: str, postData: dict):
-    post_updated = await find_and_update(post_id, postData)
+async def update_posts(post_id: str, postData: dict,  db: Session = Depends(get_db)):
+    post_updated = await find_and_update(post_id, postData, db )
     if not post_updated:
         raise HTTPException(status_code=404)
     return post_updated

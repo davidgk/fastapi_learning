@@ -13,6 +13,7 @@ pytest-asyncio = "*"
 sqlalchemy = "*"
 alembic = "*"
 python-dotenv = "*"
+faker = "*"
 
 [dev-packages]
 

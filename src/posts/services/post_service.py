@@ -37,23 +37,32 @@ def save_post( db, post_dict):
     except Exception as ex:
         raise HTTPException(status_code=500,detail=ex)
 
+def find_post_by_id( id, db):
+    try:
+        return repository.get_post_by_id(db, id)
+    except Exception as ex:
+        raise HTTPException(status_code=404,detail=ex)
+
 def get_posts(db):
     return repository.get_posts(db)
 
-async def find_and_update(post_id, postData):
-    for post in posts:
-        found = evaluate_post(post, post_id)
-        if found:
-            await update_att(post, postData, "title")
-            await update_att(post, postData, "author")
-            await update_att(post, postData, "content")
-            return post
-    return None
+async def find_and_update(post_id, post_data, db ):
+    try:
+        post_db = repository.get_post_by_id(db, post_id)
+        if not post_db:
+            raise HTTPException(status_code=404, detail="Post not found")
+        return repository.update(db, post_db, post_data )
+    except BaseException as exc:
+        print(exc)
+        return None
 
-
-async def update_att(post, postData, att: str):
-    if postData.keys().__contains__(att):
-        post[att] = postData[att]
+# def update_fields(post, postData):
+#     if postData.keys().__contains__('title'):
+#         post.title = postData['title']
+#     if postData.keys().__contains__('author'):
+#         post.title = postData['author']
+#     if postData.keys().__contains__('content'):
+#         post.title = postData['content']
 
 
 def evaluate_post(post, post_id: str, title=None):
