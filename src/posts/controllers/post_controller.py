@@ -12,8 +12,8 @@ router = APIRouter(
 )
 
 @router.get('/')
-async def get_posts():
-    return posts
+async def get_posts(db: Session = Depends(get_db)):
+    return service.get_posts(db)
 
 @router.get("/{post_id}")
 async def get_post_by_id(post_id: str, title=None):

@@ -37,6 +37,9 @@ def save_post( db, post_dict):
     except Exception as ex:
         raise HTTPException(status_code=500,detail=ex)
 
+def get_posts(db):
+    return repository.get_posts(db)
+
 async def find_and_update(post_id, postData):
     for post in posts:
         found = evaluate_post(post, post_id)
@@ -58,3 +61,4 @@ def evaluate_post(post, post_id: str, title=None):
     if exists and title:
         exists = post["title"] == title
     return exists
+

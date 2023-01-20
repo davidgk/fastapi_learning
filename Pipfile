@@ -12,6 +12,7 @@ anyio = "*"
 pytest-asyncio = "*"
 sqlalchemy = "*"
 alembic = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
