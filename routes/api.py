@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from src.posts.endpoints import post
+from src.posts.controllers import post_controller
 
 router = APIRouter(prefix='/api')
-router.include_router(post.router)
+router.include_router(post_controller.router)

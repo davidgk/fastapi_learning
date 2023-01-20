@@ -1,9 +1,10 @@
-from tests.commons_test import client
-
+from tests.commons_test import client, async_get_call
+import pytest
+pytest_plugins = ('pytest_asyncio',)
 POST_URL = "/api/posts/"
-
-def test_read_all_posts():
-    response = client.get(POST_URL)
+@pytest.mark.asyncio
+async def test_read_all_posts():
+    response = await async_get_call(POST_URL)
     assert response.status_code == 200
     assert len(response.json()) == 3
 

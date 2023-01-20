@@ -9,6 +9,7 @@ uvicorn = "*"
 httpx = "*"
 pytest = "*"
 anyio = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 
