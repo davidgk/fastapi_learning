@@ -13,4 +13,7 @@ class Post(BaseModel):
     published_at: Optional[datetime]
     published: bool = False
 
+    class Config:
+        orm_mode = True
+
 

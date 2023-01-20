@@ -10,6 +10,8 @@ httpx = "*"
 pytest = "*"
 anyio = "*"
 pytest-asyncio = "*"
+sqlalchemy = "*"
+alembic = "*"
 
 [dev-packages]
 

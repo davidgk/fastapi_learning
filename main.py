@@ -2,6 +2,7 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from routes.api import router as api_router
+from src.commons.configuration.database import Base, engine
 
 app = FastAPI()
 
@@ -16,12 +17,13 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
-
+Base.metadata.create_all(bind=engine)
 @app.get('/')
 async def index():
-    return {"application": "FASTAPI POC"}
+    result = {"application": "FASTAPI POC"}
+    return result
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host='127.0.0.1', port=8005, log_level="info", reload=True)
+    uvicorn.run("main:app", host='localhost', port=3010, log_level="info", reload=True)
     print("running")
 

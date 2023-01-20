@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException
-
-from uuid import uuid4 as uuid
-
-from src.posts.models.post import Post
+from fastapi import APIRouter, HTTPException, Depends
+from ..services import post_service as service
 from src.posts.services.post_service import posts, evaluate_post, find_and_update
+from sqlalchemy.orm import Session
+
+from ...commons.dependencies.dependencies import get_db
 
 router = APIRouter(
     prefix="/posts",
@@ -24,13 +24,8 @@ async def get_post_by_id(post_id: str, title=None):
         raise HTTPException(status_code=404)
 
 @router.post('/')
-async def save_posts(post_dict: dict):
-    post_dict["id"] = uuid()
-    posts.append(post_dict)
-    return post_dict
-
-
-
+async def save_posts(post_dict: dict, db: Session = Depends(get_db)):
+    return service.save_post(db, post_dict)
 
 @router.delete("/{post_id}")
 async def remove_posts(post_id: str):

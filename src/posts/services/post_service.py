@@ -1,3 +1,5 @@
+from fastapi import APIRouter, HTTPException, Depends
+
 posts = [{
     "id": "some-uuid",
     "title": "aTitle",
@@ -26,7 +28,14 @@ posts = [{
         "published": False
     }
 ]
+from ..repository import post_repository as repository
 
+def save_post( db, post_dict):
+    try:
+        # posts.append(post_dict)
+        return repository.create_post(db, post_dict)
+    except Exception as ex:
+        raise HTTPException(status_code=500,detail=ex)
 
 async def find_and_update(post_id, postData):
     for post in posts:
